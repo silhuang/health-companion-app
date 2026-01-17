@@ -1,0 +1,17 @@
+@import "tailwindcss";
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+/* Optional but recommended: remove default margins */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+
