@@ -24,7 +24,7 @@ const ThoughtCard = ({ title, content, date, emoji, response, index }: ThoughtCa
       <div className="text-text-muted line-clamp-3">{content}</div>
       <hr className="text-text-muted" />
       <div className="text-text-muted italic truncate">
-        ✨ Temp AI response text {response || content}
+        ✨ {response || content}
       </div>
     </div>
   );

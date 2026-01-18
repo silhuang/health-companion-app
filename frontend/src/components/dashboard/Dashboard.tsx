@@ -1,5 +1,5 @@
 import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
-import type { Thought } from "../../types/thought";
+import type { Thought, APIResponse, DBThought } from "../../types/thought";
 import ThoughtCard from "./ThoughtCard";
 import NewThoughtModal from "./NewThoughtModal";
 import emojiBoardImg from "../../assets/emoji_board.svg";
@@ -12,39 +12,68 @@ const Dashboard = forwardRef((_, ref) => {
     openModal: () => setIsModalOpen(true),
   }));
 
+  // Transform database thought to frontend Thought interface
+  const transformDBThought = (dbThought: DBThought): Thought => ({
+    title: dbThought.title,
+    content: dbThought.content,
+    date: new Date(dbThought.date).toISOString().split('T')[0], // Convert to YYYY-MM-DD format
+    emoji: dbThought.emoji,
+    response: dbThought.responseSummary,
+  });
+
   useEffect(() => {
     // Fetch thoughts from API or local storage
-    setThoughtList([
-      {
-        title: "Productive Monday",
-        content:
-          "Had a great start to the week. Finished all my tasks early and even had time for waking my dog and cat.",
-        date: "2024-06-01",
-        emoji: "😌",
-        response: "Thank you for sharing your thought!",
-      },
-      {
-        title: "Another Thought",
-        content: "Here's some more content for another thought.",
-        date: "2024-06-02",
-        emoji: "🤔",
-        response: "That's an interesting perspective.",
-      },
-      {
-        title: "Another Thought",
-        content: "Here's some more content for another thought.",
-        date: "2024-06-02",
-        emoji: "🤔",
-        response: "That's an interesting perspective.",
-      },
-      {
-        title: "Another Thought",
-        content: "Here's some more content for another thought.",
-        date: "2024-06-02",
-        emoji: "🤔",
-        response: "That's an interesting perspective.",
-      },
-    ]);
+    const fetchThoughts = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/thoughts");
+        const apiResponse: APIResponse = await response.json();
+
+        if (apiResponse.success && apiResponse.data) {
+          // Transform each database thought to match the Thought interface
+          const transformedThoughts = apiResponse.data.map(transformDBThought);
+          setThoughtList(transformedThoughts);
+        } else {
+          console.error("API response unsuccessful:", apiResponse);
+        }
+      } catch (error) {
+        console.error("Error fetching thoughts:", error);
+      }
+    };
+
+    fetchThoughts();
+
+
+    // setThoughtList([
+    //   {
+    //     title: "Productive Monday",
+    //     content:
+    //       "Had a great start to the week. Finished all my tasks early and even had time for waking my dog and cat.",
+    //     date: "2024-06-01",
+    //     emoji: "😌",
+    //     response: "Thank you for sharing your thought!",
+    //   },
+    //   {
+    //     title: "Another Thought",
+    //     content: "Here's some more content for another thought.",
+    //     date: "2024-06-02",
+    //     emoji: "🤔",
+    //     response: "That's an interesting perspective.",
+    //   },
+    //   {
+    //     title: "Another Thought",
+    //     content: "Here's some more content for another thought.",
+    //     date: "2024-06-02",
+    //     emoji: "🤔",
+    //     response: "That's an interesting perspective.",
+    //   },
+    //   {
+    //     title: "Another Thought",
+    //     content: "Here's some more content for another thought.",
+    //     date: "2024-06-02",
+    //     emoji: "🤔",
+    //     response: "That's an interesting perspective.",
+    //   },
+    // ]);
   }, []);
 
   return (
