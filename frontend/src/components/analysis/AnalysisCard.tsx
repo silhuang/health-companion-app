@@ -10,12 +10,6 @@ type AnalysisCardProps = {
   listContent?: string[];
 };
 
-interface Colors {
-  "green": string;
-  "yellow": string;
-  "purple": string;
-}
-
 type ColorName = "green" | "yellow" | "purple";
 
 const COLOR_MAP = {
