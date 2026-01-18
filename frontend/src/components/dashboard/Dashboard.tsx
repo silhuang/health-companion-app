@@ -2,6 +2,7 @@ import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import type { Thought } from "../../types/thought";
 import ThoughtCard from "./ThoughtCard";
 import NewThoughtModal from "./NewThoughtModal";
+import emojiBoardImg from '../../assets/emoji_board.svg';
 
 const Dashboard = forwardRef((_, ref) => {
   const [thoughtList, setThoughtList] = useState<Thought[]>([]);
@@ -51,7 +52,7 @@ const Dashboard = forwardRef((_, ref) => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}
         onSubmit={(thought) => {
-          console.log('New thought:', thought);
+          console.log('New thought:', thought); TODO: //send to backend here
           setIsModalOpen(false);
         }}
       />
@@ -62,7 +63,9 @@ const Dashboard = forwardRef((_, ref) => {
         <div
           className="rounded-4xl bg-card"
           style={{ height: "calc(100vh - var(--navbar-height, 64px))" }}
-        ></div>
+        >
+          <img src={emojiBoardImg} alt="Emoji Board" className="w-full h-full object-contain rounded-4xl" />
+        </div>
       </div>
       {/* RIGHT SIDE */}
       <div className="flex flex-col gap-4 p-4 flex-1">
