@@ -3,6 +3,7 @@ import type { Thought, APIResponse, DBThought } from "../../types/thought";
 import ThoughtCard from "./ThoughtCard";
 import NewThoughtModal from "./NewThoughtModal";
 import emojiBoardImg from "../../assets/emoji_board.svg";
+import { motion } from "framer-motion";
 
 const Dashboard = forwardRef((_, ref) => {
   const [thoughtList, setThoughtList] = useState<Thought[]>([]);
@@ -102,10 +103,12 @@ const Dashboard = forwardRef((_, ref) => {
       <div className="md:flex md:flex-1 gap-12 bg-background">
         {/* LEFT SIDE */}
         {/* <div className="sticky flex flex-col gap-8 flex-1 pb-12 pt-6"> */}
-        <div className={`h-fit flex flex-col flex-1 gap-8 pt-12 transition-all duration-300 ${isSticky ? 'sticky -top-10' : ''}`}>
+        <div
+          className={`h-fit flex flex-col flex-1 gap-8 pt-12 transition-all duration-300 ${isSticky ? "sticky -top-10" : ""}`}
+        >
           <div className="text-3xl font-bold">Your Emoji Board</div>
           <div
-            className="rounded-4xl bg-card"
+            className="rounded-4xl bg-card cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 hover:-translate-y-1"
             style={{ height: "calc(100vh - var(--navbar-height, 224px))" }}
           >
             <img
@@ -119,17 +122,18 @@ const Dashboard = forwardRef((_, ref) => {
         <div className="flex flex-col gap-8 py-12 flex-1">
           <div className="text-3xl font-bold">Your Thoughts</div>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-            {thoughtList.map((thought, index) => (
-              <ThoughtCard
-                title={thought.title}
-                content={thought.content}
-                date={thought.date}
-                emoji={thought.emoji}
-                response={thought.response}
-                index={index}
-                key={index}
-              />
-            ))}
+              {thoughtList.map((thought, index) => (
+                
+                  <ThoughtCard
+                    title={thought.title}
+                    content={thought.content}
+                    date={thought.date}
+                    emoji={thought.emoji}
+                    response={thought.response}
+                    index={index}
+                  />
+                
+              ))}
           </div>
         </div>
       </div>

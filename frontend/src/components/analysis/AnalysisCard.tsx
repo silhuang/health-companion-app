@@ -1,4 +1,5 @@
 import React from "react";
+import { SpeakerWaveIcon } from "@heroicons/react/24/outline"
 
 type AnalysisCardProps = {
   color?: string;
@@ -35,7 +36,9 @@ const AnalysisCard = ({
   listContent,
 }: AnalysisCardProps) => {
   return (
-    <div className={`flex flex-col w-full gap-4 rounded-2xl p-12 ${COLOR_MAP[color].base}`}>
+    <div
+      className={`flex flex-col w-full gap-4 rounded-2xl p-12 ${COLOR_MAP[color].base}`}
+    >
       {sentimentRating && sentimentLabel && (
         <div className="flex gap-4 items-center">
           <div className="w-12 h-12 flex items-center justify-center font-bold text-2xl rounded-2xl bg-card-green/90">
@@ -44,12 +47,18 @@ const AnalysisCard = ({
           <div className="font-black text-2xl">{sentimentLabel}</div>
         </div>
       )}
+
       <div className="flex gap-4 items-center">
-        <div className={`w-12 h-12 flex items-center justify-center ${COLOR_MAP[color].dark} rounded-2xl`}>
+        <div
+          className={`w-12 h-12 flex items-center justify-center ${COLOR_MAP[color].dark} rounded-2xl`}
+        >
           {icon &&
             React.createElement(icon, { className: "w-8 h-8 text-text-muted" })}
         </div>
-        <div className="text-2xl font-bold">{title}</div>
+        <div className="justify-between">
+          <div className="text-2xl font-bold">{title}</div>
+          <SpeakerWaveIcon className="h-6 w-6 text-gray-500" />
+        </div>
       </div>
       {content && <div className="text-xl">{content}</div>}
       {listContent && (
