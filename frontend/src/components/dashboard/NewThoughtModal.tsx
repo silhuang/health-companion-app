@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import thoughtBubble from "../../assets/thought_bubble.png";
 import { MicrophoneIcon } from "@heroicons/react/24/outline";
 import send from "../../assets/send.png";
+import {LoadingSpinner} from "./LoadingSpinner.tsx";
 
 interface NewThoughtModalProps {
   isOpen: boolean;
@@ -29,20 +30,21 @@ export default function NewThoughtModal({
   const [thought, setThought] = useState("");
   const [details, setDetails] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen) return null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    onSubmit({
-      title: thought,
-      content: details,
-      emotion: selectedEmotion,
-    });
+    // onSubmit({
+    //   title: thought,
+    //   content: details,
+    //   emotion: selectedEmotion,
+    // });
     const savedThought = thought;
     const savedDetails = details;
     const savedEmoji = selectedEmotion;
-
+    setIsLoading(true)
     // Reset form
     setThought("");
     setDetails("");
@@ -63,7 +65,12 @@ export default function NewThoughtModal({
     const response = data.data;
 
     console.log("Gemini Response:", response);
-
+    onSubmit({
+      title: thought,
+      content: details,
+      emotion: selectedEmotion,
+    });
+    setIsLoading(false);
     navigate("/thought-analysis", {
       state: {
         sentimentLabel: response.sentimentLabel,
@@ -160,6 +167,9 @@ export default function NewThoughtModal({
             </button>
           </div>
         </div>
+
+
+      {isLoading && ( <div style={{ position: "fixed", inset: 0, background: "rgba(255, 255, 255, 0.7)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 9999, }} > <LoadingSpinner /> </div> )}
 
         {/* Submit Button */}
         <button
