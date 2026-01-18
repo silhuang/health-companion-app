@@ -36,6 +36,31 @@ const AnalysisCard = ({
   content,
   listContent,
 }: AnalysisCardProps) => {
+
+  const playTTS = async (text: string) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/elevenlabs/tts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!response.ok) {
+        console.error('TTS request failed with status:', response.status, response.statusText);
+        throw new Error(`Failed to generate TTS: ${response.status} ${response.statusText}`);
+      }
+
+      const audioBlob = new Blob([await response.arrayBuffer()], { type: 'audio/mpeg' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+    } catch (error) {
+      console.error('Error playing TTS:', error);
+    }
+  }
+
   return (
     <div className={`flex flex-col w-full gap-4 rounded-2xl p-12 ${color && COLOR_MAP[color].base}`}>
       {sentimentRating && sentimentLabel && (
@@ -53,7 +78,17 @@ const AnalysisCard = ({
         </div>
         <div className="text-2xl font-bold">{title}</div>
       </div>
-      {content && <div className="text-xl">{content}</div>}
+      {content && (
+        <div className="flex items-center gap-4">
+          <div className="text-xl">{content}</div>
+          <button
+            onClick={() => playTTS(content)}
+            className="p-4"
+          >
+            {/* to put speaker */}
+          </button>
+        </div>
+      )}
       {listContent && (
         <ul className="text-xl">
           {listContent.map((listItem) => (
