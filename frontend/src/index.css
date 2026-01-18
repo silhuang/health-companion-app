@@ -12,6 +12,8 @@
     /* font-family: 'Gochi Hand'; */
     
     /* font-family: Poppins; */
+
+    background-color: var(--color-background);
 }
 
 /* Optional but recommended: remove default margins */

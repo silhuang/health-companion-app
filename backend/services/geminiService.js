@@ -18,9 +18,10 @@ const MOOD_SCHEMA = {
       description: "A concise, two-sentence summary of the journal entry and how the user is feeling.",
     },
     suggestions: {
-      type: Type.STRING,
+      type: Type.ARRAY,
+      items: { type: "string" },
       description:
-        "A short list of 3 empathetic, and actionable pieces of suggestions specifically tailored to the user's current state and situation.",
+        "A short list of 3 empathetic, and actionable pieces of suggestions specifically tailored to the user's current state and situation. Return in JSON array format.",
     },
     reframe: {
       type: Type.STRING,
@@ -57,7 +58,7 @@ export const analyzeJournalEntry = async (
         responseMimeType: "application/json",
         responseSchema: MOOD_SCHEMA,
         systemInstruction:
-          "You are an empathetic emotional wellness assistant. Analyze journal entries with psychological depth and nuance. Avoid generic responses.",
+          "You are an empathetic emotional wellness assistant. Analyze journal entries with psychological depth and nuance. Avoid generic responses. Respond as if you were talking to the user directly.",
       },
     });
 

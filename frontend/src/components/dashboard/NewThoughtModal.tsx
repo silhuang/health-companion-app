@@ -44,20 +44,30 @@ export default function NewThoughtModal({
 
     // GEMINI API CALL
     const url = "http://localhost:3001/api/gemini/analyze";
-    
+
     const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ text: details }),
-    })
+    });
 
     const data = await res.json();
-    console.log("Mood Analysis:", data);
+    const response = data.data;
 
-    navigate("/thought-analysis");
-  };
+    console.log("Gemini Response:", response);
+
+    navigate("/thought-analysis", {
+      state: {
+        sentimentLabel: response.sentimentLabel,
+        sentimentScore: response.sentimentScore,
+        summaryContent: response.summary,
+        suggestionsContent: response.suggestions,
+        reframeContent: response.reframe,
+      },
+    });
+  }
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">

@@ -53,11 +53,11 @@ const AnalysisCard = ({
       </div>
       {content && <div className="text-xl">{content}</div>}
       {listContent && (
-        <div className="text-xl">
+        <ul className="text-xl">
           {listContent.map((listItem) => (
-            <div>{listItem}</div>
+            <li className="list-disc list-inside">{listItem}</li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );
