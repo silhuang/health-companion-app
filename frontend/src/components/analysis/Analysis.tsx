@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import AnalysisCard from "./AnalysisCard";
+import { AnalysisCard } from "./AnalysisCard";
 import {
   HeartIcon,
   LightBulbIcon,
