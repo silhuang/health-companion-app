@@ -1,5 +1,5 @@
 import React from "react";
-import { SpeakerWaveIcon } from "@heroicons/react/24/outline"
+import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 
 type AnalysisCardProps = {
   color: ColorName;
@@ -37,30 +37,37 @@ export const AnalysisCard = ({
   content,
   listContent,
 }: AnalysisCardProps) => {
-
   const playTTS = async (text: string) => {
     try {
-      const response = await fetch('http://localhost:3001/api/elevenlabs/tts', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/api/elevenlabs/tts", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ text }),
       });
 
       if (!response.ok) {
-        console.error('TTS request failed with status:', response.status, response.statusText);
-        throw new Error(`Failed to generate TTS: ${response.status} ${response.statusText}`);
+        console.error(
+          "TTS request failed with status:",
+          response.status,
+          response.statusText,
+        );
+        throw new Error(
+          `Failed to generate TTS: ${response.status} ${response.statusText}`,
+        );
       }
 
-      const audioBlob = new Blob([await response.arrayBuffer()], { type: 'audio/mpeg' });
+      const audioBlob = new Blob([await response.arrayBuffer()], {
+        type: "audio/mpeg",
+      });
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
       audio.play();
     } catch (error) {
-      console.error('Error playing TTS:', error);
+      console.error("Error playing TTS:", error);
     }
-  }
+  };
 
   return (
     <div
@@ -89,7 +96,11 @@ export const AnalysisCard = ({
           </div>
           <div className="justify-between">
             <div className="text-2xl font-bold">{title}</div>
-            <SpeakerWaveIcon className="h-6 w-6 text-gray-500" />
+
+            <SpeakerWaveIcon
+              onClick={() => content ? playTTS(content) : listContent ? playTTS(listContent.join(". ")) : null}
+              className="h-6 w-6 text-gray-500"
+            />
           </div>
         </div>
         {content && <div className="text-xl">{content}</div>}
@@ -101,24 +112,6 @@ export const AnalysisCard = ({
           </ul>
         )}
       </div>
-      {content && (
-        <div className="flex items-center gap-4">
-          <div className="text-xl">{content}</div>
-          <button
-            onClick={() => playTTS(content)}
-            className="p-4"
-          >
-            {/* to put speaker */}
-          </button>
-        </div>
-      )}
-      {listContent && (
-        <ul className="text-xl">
-          {listContent.map((listItem) => (
-            <li className="list-disc list-inside">{listItem}</li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 };
