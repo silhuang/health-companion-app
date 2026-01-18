@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { XMarkIcon } from '@heroicons/react/20/solid';
-import thoughtBubble from '../../assets/thought_bubble.png';
-
+import { useState } from "react";
+import { XMarkIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from "react-router-dom";
+import thoughtBubble from "../../assets/thought_bubble.png";
 
 interface NewThoughtModalProps {
   isOpen: boolean;
@@ -10,18 +10,23 @@ interface NewThoughtModalProps {
 }
 
 const EMOTIONS = [
-  { name: 'Happy', icon: 'happy' },
-  { name: 'Calm', icon: 'calm' },
-  { name: 'Sad', icon: 'sad' },
-  { name: 'Overwhelmed', icon: 'overwhelmed' },
-  { name: 'Angry', icon: 'angry' },
-  { name: 'Confused', icon: 'confused' },
+  { name: "Happy", icon: "happy" },
+  { name: "Calm", icon: "calm" },
+  { name: "Sad", icon: "sad" },
+  { name: "Overwhelmed", icon: "overwhelmed" },
+  { name: "Angry", icon: "angry" },
+  { name: "Confused", icon: "confused" },
 ];
 
-export default function NewThoughtModal({ isOpen, onClose, onSubmit }: NewThoughtModalProps) {
+export default function NewThoughtModal({
+  isOpen,
+  onClose,
+  onSubmit,
+}: NewThoughtModalProps) {
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
-  const [thought, setThought] = useState('');
-  const [details, setDetails] = useState('');
+  const [thought, setThought] = useState("");
+  const [details, setDetails] = useState("");
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -33,9 +38,10 @@ export default function NewThoughtModal({ isOpen, onClose, onSubmit }: NewThough
       emotion: selectedEmotion,
     });
     // Reset form
-    setThought('');
-    setDetails('');
+    setThought("");
+    setDetails("");
     setSelectedEmotion(null);
+    navigate("/thought-analysis");
   };
 
   return (
@@ -45,7 +51,7 @@ export default function NewThoughtModal({ isOpen, onClose, onSubmit }: NewThough
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <h2 className="text-2xl font-bold text-gray-800">New Thought</h2>
-          <img src={thoughtBubble} alt="Thought bubble" className="w-8 h-8" />
+            <img src={thoughtBubble} alt="Thought bubble" className="w-8 h-8" />
           </div>
           <button
             onClick={onClose}
@@ -81,8 +87,8 @@ export default function NewThoughtModal({ isOpen, onClose, onSubmit }: NewThough
                 onClick={() => setSelectedEmotion(emotion.name)}
                 className={`flex flex-col items-center gap-2 p-4 rounded-2xl transition-colors ${
                   selectedEmotion === emotion.name
-                    ? 'bg-gray-200'
-                    : 'hover:bg-gray-100'
+                    ? "bg-gray-200"
+                    : "hover:bg-gray-100"
                 }`}
               >
                 <img
