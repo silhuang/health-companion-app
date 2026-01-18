@@ -2,6 +2,7 @@ import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import type { Thought } from "../../types/thought";
 import ThoughtCard from "./ThoughtCard";
 import NewThoughtModal from "./NewThoughtModal";
+import emojiBoardImg from "../../assets/emoji_board.svg";
 
 const Dashboard = forwardRef((_, ref) => {
   const [thoughtList, setThoughtList] = useState<Thought[]>([]);
@@ -63,7 +64,13 @@ const Dashboard = forwardRef((_, ref) => {
           <div
             className="rounded-4xl bg-card"
             style={{ height: "calc(100vh - var(--navbar-height, 224px))" }}
-          ></div>
+          >
+            <img
+              src={emojiBoardImg}
+              alt="Emoji Board"
+              className="w-full h-full object-contain rounded-4xl"
+            />
+          </div>
         </div>
         {/* RIGHT SIDE */}
         <div className="flex flex-col gap-8 py-12 flex-1">
