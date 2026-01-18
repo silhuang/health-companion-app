@@ -3,8 +3,15 @@
   /* Global navbar height used by components (fallback 64px) */
   --navbar-height: 128px;
 
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
-    Arial, sans-serif;
+  /* font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, sans-serif; */
+    font-family: Quicksand;
+    /* font-family: Manrope; */
+    /* font-family: Nunito; */
+    /* font-family: Cabin; */
+    /* font-family: 'Gochi Hand'; */
+    
+    /* font-family: Poppins; */
 }
 
 /* Optional but recommended: remove default margins */
