@@ -2,6 +2,7 @@ import { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
 import thoughtBubble from "../../assets/thought_bubble.png";
+import {LoadingSpinner} from "./LoadingSpinner.tsx";
 
 interface NewThoughtModalProps {
   isOpen: boolean;
@@ -26,17 +27,21 @@ export default function NewThoughtModal({
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
   const [thought, setThought] = useState("");
   const [details, setDetails] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  if (!isOpen) return null;
 
+  if (!isOpen) return null;
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
     onSubmit({
       title: thought,
       content: details,
       emotion: selectedEmotion,
     });
+
     const savedThought = thought;
     const savedDetails = details;
     const savedEmoji = selectedEmotion;
@@ -46,35 +51,87 @@ export default function NewThoughtModal({
     setDetails("");
     setSelectedEmotion(null);
 
-    // GEMINI API CALL
-    const url = "http://localhost:3001/api/gemini/analyze";
+    setIsLoading(true); // SHOW LOADER
 
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: details }),
-    });
+    try {
+      const url = "http://localhost:3001/api/gemini/analyze";
 
-    const data = await res.json();
-    const response = data.data;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: details }),
+      });
 
-    console.log("Gemini Response:", response);
+      const data = await res.json();
+      const response = data.data;
 
-    navigate("/thought-analysis", {
-      state: {
-        sentimentLabel: response.sentimentLabel,
-        sentimentScore: response.sentimentScore,
-        summaryContent: response.summary,
-        suggestionsContent: response.suggestions,
-        reframeContent: response.reframe,
-        title: savedThought,
-        content: savedDetails,
-        emoji: savedEmoji,
-      },
-    });
+      console.log("Gemini Response:", response);
+
+      navigate("/thought-analysis", {
+        state: {
+          sentimentLabel: response.sentimentLabel,
+          sentimentScore: response.sentimentScore,
+          summaryContent: response.summary,
+          suggestionsContent: response.suggestions,
+          reframeContent: response.reframe,
+          title: savedThought,
+          content: savedDetails,
+          emoji: savedEmoji,
+        },
+      });
+    } finally {
+      setIsLoading(false); // HIDE LOADER
+    }
   }
+
+  //
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   onSubmit({
+  //     title: thought,
+  //     content: details,
+  //     emotion: selectedEmotion,
+  //   });
+  //   const savedThought = thought;
+  //   const savedDetails = details;
+  //   const savedEmoji = selectedEmotion;
+  //
+  //   // Reset form
+  //   setThought("");
+  //   setDetails("");
+  //   setSelectedEmotion(null);
+  //
+  //   // GEMINI API CALL
+  //   const url = "http://localhost:3001/api/gemini/analyze";
+  //
+  //   const res = await fetch(url, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ text: details }),
+  //   });
+  //
+  //   const data = await res.json();
+  //   const response = data.data;
+  //
+  //   console.log("Gemini Response:", response);
+  //
+  //   navigate("/thought-analysis", {
+  //     state: {
+  //       sentimentLabel: response.sentimentLabel,
+  //       sentimentScore: response.sentimentScore,
+  //       summaryContent: response.summary,
+  //       suggestionsContent: response.suggestions,
+  //       reframeContent: response.reframe,
+  //       title: savedThought,
+  //       content: savedDetails,
+  //       emoji: savedEmoji,
+  //     },
+  //   });
+  // }
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
@@ -148,6 +205,21 @@ export default function NewThoughtModal({
             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#79D2BC] h-32 resize-none"
           />
         </div>
+        {isLoading && (
+            <div
+                style={{
+                  position: "fixed",
+                  inset: 0,
+                  background: "rgba(255, 255, 255, 0.7)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  zIndex: 9999,
+                }}
+            >
+              <LoadingSpinner />
+            </div>
+        )}
 
         {/* Submit Button */}
         <button

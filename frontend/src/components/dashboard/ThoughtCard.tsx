@@ -1,4 +1,6 @@
 import type { Thought } from "../../types/thought";
+import { LoadingSpinner } from "./LoadingSpinner";
+
 
 interface ThoughtCardProps extends Thought {
   index: number;
@@ -50,6 +52,7 @@ const ThoughtCard = ({
       <div className="text-text-muted italic truncate">
         ✨ {response || content}
       </div>
+      {/*<LoadingSpinner></LoadingSpinner>*/}
     </div>
   );
 };
