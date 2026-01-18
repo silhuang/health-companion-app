@@ -18,7 +18,11 @@ body {
 }
 
 @theme {
-  --color-background: #f0f0f0;
-  --color-card: #fff;
+  --color-background: #f5f5f5;
   --color-text-muted: #888;
+
+  --color-card: #fff;
+  --color-card-yellow: #FFFAE6;
+  --color-card-purple: #F0DDF7;
+  --color-card-green: #E0F5F0;
 }

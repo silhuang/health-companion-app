@@ -60,6 +60,8 @@ const Dashboard = () => {
               date={thought.date}
               emoji={thought.emoji}
               response={thought.response}
+              index={index}
+              key={index}
             />
           ))}
         </div>
