@@ -60,7 +60,7 @@ const Dashboard = forwardRef((_, ref) => {
       <div className="md:flex md:flex-1 gap-12 bg-background">
         {/* LEFT SIDE */}
         <div className="flex flex-col gap-8 flex-1 pb-12 pt-6">
-          <div className="text-2xl font-bold">Your Emoji Board</div>
+          <div className="text-3xl font-bold">Your Emoji Board</div>
           <div
             className="rounded-4xl bg-card"
             style={{ height: "calc(100vh - var(--navbar-height, 224px))" }}
@@ -74,7 +74,7 @@ const Dashboard = forwardRef((_, ref) => {
         </div>
         {/* RIGHT SIDE */}
         <div className="flex flex-col gap-8 py-12 flex-1">
-          <div className="text-2xl font-bold">Your Thoughts</div>
+          <div className="text-3xl font-bold">Your Thoughts</div>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {thoughtList.map((thought, index) => (
               <ThoughtCard
