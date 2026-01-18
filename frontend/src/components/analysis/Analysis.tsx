@@ -40,7 +40,7 @@ const Analysis = () => {
       <div className="flex justify-end gap-4">
         <button
           onClick={() => {}}
-          className="flex items-center gap-2 px-6 py-2 rounded-full bg-[#ddd] text-gray-800 font-medium hover:bg-[#5fa89b] transition-colors"
+          className="flex items-center gap-2 px-6 py-2 rounded-full bg-[#ddd] text-gray-800 font-medium hover:bg-[#aaa] transition-colors"
         >
           <span className="hidden md:inline">Discard</span>
         </button>
