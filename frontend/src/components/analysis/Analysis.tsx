@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AnalysisCard from "./AnalysisCard";
 import {
@@ -8,6 +9,7 @@ import {
 
 const Analysis = () => {
   const navigate = useNavigate();
+  const [isSaving, setIsSaving] = useState(false);
 
   const location = useLocation();
   const {
@@ -16,7 +18,49 @@ const Analysis = () => {
     summaryContent,
     suggestionsContent,
     reframeContent,
-  } = location.state || {}; 
+    title,
+    content,
+    emoji,
+  } = location.state || {};
+
+  const addToDatabase = async () => {
+    setIsSaving(true);
+    try {
+      const url = "http://localhost:3001/api/thoughts";
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          emoji: emoji, 
+          date: new Date().toISOString(),
+          title: title, 
+          content: content, 
+          responseSummary: summaryContent,
+          responseSuggestions: suggestionsContent,
+          responseReframe: reframeContent,
+          sentimentLabel: sentimentLabel,
+          sentimentScore: sentimentScore,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log("Thought added successfully:", data);
+
+      navigate("/");
+    } catch (error) {
+      console.error("Error adding thought to database:", error);
+      alert("Failed to save thought. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-8 p-12 max-w-350 mx-auto">
@@ -48,6 +92,7 @@ const Analysis = () => {
       <div className="flex justify-end gap-4">
         <button
           onClick={() => {
+            // ADD TO DB*****************
             navigate("/");
           }}
           className="cursor-pointer flex items-center gap-2 px-6 py-2 rounded-full bg-[#ddd] text-gray-800 font-medium hover:bg-[#aaa] transition-colors"
@@ -55,12 +100,13 @@ const Analysis = () => {
           <span className="hidden md:inline">Discard</span>
         </button>
         <button
-          onClick={() => {
-            navigate("/");
-          }}
-          className="cursor-pointer flex items-center gap-2 px-6 py-2 rounded-full bg-[#79D2BC] text-gray-800 font-medium hover:bg-[#5fa89b] transition-colors"
+          onClick={addToDatabase}
+          disabled={isSaving}
+          className="cursor-pointer flex items-center gap-2 px-6 py-2 rounded-full bg-[#79D2BC] text-gray-800 font-medium hover:bg-[#5fa89b] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <span className="hidden md:inline">Save & Close</span>
+          <span className="hidden md:inline">
+            {isSaving ? 'Saving...' : 'Save & Close'}
+          </span>
         </button>
       </div>
     </div>

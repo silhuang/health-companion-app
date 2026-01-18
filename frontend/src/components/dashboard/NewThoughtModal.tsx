@@ -37,6 +37,10 @@ export default function NewThoughtModal({
       content: details,
       emotion: selectedEmotion,
     });
+    const savedThought = thought;
+    const savedDetails = details;
+    const savedEmoji = selectedEmotion;
+
     // Reset form
     setThought("");
     setDetails("");
@@ -65,6 +69,9 @@ export default function NewThoughtModal({
         summaryContent: response.summary,
         suggestionsContent: response.suggestions,
         reframeContent: response.reframe,
+        title: savedThought,
+        content: savedDetails,
+        emoji: savedEmoji,
       },
     });
   }
