@@ -7,7 +7,7 @@ interface ThoughtCardProps extends Thought {
 const ThoughtCard = ({ title, content, date, emoji, response, index }: ThoughtCardProps) => {
   return (
     <div
-      className={`flex flex-col w-full gap-1 rounded-2xl p-4 ${
+      className={`flex flex-col text-xl w-full gap-2 rounded-2xl px-8 py-6 ${
         index % 3 === 0
           ? "bg-card-yellow"
           : index % 2 === 0
@@ -19,9 +19,9 @@ const ThoughtCard = ({ title, content, date, emoji, response, index }: ThoughtCa
         <div>{emoji}</div>
         <div className="text-text-muted">{date}</div>
       </div>
-      <div className="text-lg font-bold">{title}</div>
+      <div className="text-2xl font-bold">{title}</div>
 
-      <div className="text-text-muted line-clamp-2">{content}</div>
+      <div className="text-text-muted line-clamp-3">{content}</div>
       <hr className="text-text-muted" />
       <div className="text-text-muted italic truncate">
         ✨ Temp AI response text {response || content}
