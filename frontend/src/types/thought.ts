@@ -3,5 +3,5 @@ export interface Thought {
   content: string;
   date: string;
   emoji: string;
-  // response: string;
+  response: string;
 }
