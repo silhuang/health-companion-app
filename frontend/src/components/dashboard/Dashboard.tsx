@@ -7,10 +7,23 @@ import emojiBoardImg from "../../assets/emoji_board.svg";
 const Dashboard = forwardRef((_, ref) => {
   const [thoughtList, setThoughtList] = useState<Thought[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
   useImperativeHandle(ref, () => ({
     openModal: () => setIsModalOpen(true),
   }));
+
+  // Handle scroll to make element sticky after scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      // Make sticky after scrolling 100px
+      const scrollThreshold = 100;
+      setIsSticky(window.scrollY > scrollThreshold);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Transform database thought to frontend Thought interface
   const transformDBThought = (dbThought: DBThought): Thought => ({
@@ -88,7 +101,8 @@ const Dashboard = forwardRef((_, ref) => {
       />
       <div className="md:flex md:flex-1 gap-12 bg-background">
         {/* LEFT SIDE */}
-        <div className="flex flex-col gap-8 flex-1 pb-12 pt-6">
+        {/* <div className="sticky flex flex-col gap-8 flex-1 pb-12 pt-6"> */}
+        <div className={`h-fit flex flex-col flex-1 gap-8 pt-12 transition-all duration-300 ${isSticky ? 'sticky -top-10' : ''}`}>
           <div className="text-3xl font-bold">Your Emoji Board</div>
           <div
             className="rounded-4xl bg-card"
