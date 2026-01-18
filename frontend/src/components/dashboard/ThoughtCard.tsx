@@ -25,13 +25,15 @@ const ThoughtCard = ({
 
   return (
     <div
-      className={`flex flex-col text-xl w-full gap-2 rounded-2xl px-8 py-6 ${
-        index % 3 === 0
-          ? "bg-card-yellow"
-          : index % 2 === 0
-            ? "bg-card-purple"
-            : "bg-card-green"
-      }`}
+      className={`flex flex-col text-xl w-full gap-2 rounded-2xl px-8 py-6 
+        cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 hover:-translate-y-1"
+        ${
+          index % 3 === 0
+            ? "bg-card-yellow"
+            : index % 2 === 0
+              ? "bg-card-purple"
+              : "bg-card-green"
+        }`}
     >
       <div className="flex justify-between items-center">
         {emotion && (
