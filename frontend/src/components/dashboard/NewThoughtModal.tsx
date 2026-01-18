@@ -30,7 +30,7 @@ export default function NewThoughtModal({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     onSubmit({
       title: thought,
@@ -41,6 +41,21 @@ export default function NewThoughtModal({
     setThought("");
     setDetails("");
     setSelectedEmotion(null);
+
+    // GEMINI API CALL
+    const url = "http://localhost:3001/api/gemini/analyze";
+    
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: details }),
+    })
+
+    const data = await res.json();
+    console.log("Mood Analysis:", data);
+
     navigate("/thought-analysis");
   };
 

@@ -1,36 +1,36 @@
-import { GoogleGenAI } from "@google/genai";
-import dotenv from "dotenv/config"
+// import { GoogleGenAI } from "@google/genai";
+// import dotenv from "dotenv/config"
 
-export class GeminiHelper{
-    messageId = 0;
+// export class GeminiHelper{
+//     messageId = 0;
 
-    ai = new GoogleGenAI({
-        apiKey: process.env.GEMINI_API_KEY,
-    });
+//     ai = new GoogleGenAI({
+//         apiKey: process.env.GEMINI_API_KEY,
+//     });
 
-    constructor(){
+//     constructor(){
 
-    }
+//     }
 
-    async send(text) {
+//     async send(text) {
 
-        const start = Date.now();
+//         const start = Date.now();
 
-        console.log(`${this.messageId} GeminiHelper sent ` + text);
-        const response = await this.ai.models.generateContent({
-            model: "gemini-3-flash-preview",
-            contents: text,
-        });
+//         console.log(`${this.messageId} GeminiHelper sent ` + text);
+//         const response = await this.ai.models.generateContent({
+//             model: "gemini-3-flash-preview",
+//             contents: text,
+//         });
 
-        const end = Date.now();
+//         const end = Date.now();
 
-        console.log(`${this.messageId} GeminiHelper received ` + response.text);
-        console.log(`${this.messageId++} Time elapsed: ${end - start} ms`);
-    }
-}
+//         console.log(`${this.messageId} GeminiHelper received ` + response.text);
+//         console.log(`${this.messageId++} Time elapsed: ${end - start} ms`);
+//     }
+// }
 
-// Test code
-(async () => {
-    const gemini = new GeminiHelper();
-    await gemini.send("Explain how AI works in a few words");
-})();
+// // Test code
+// (async () => {
+//     const gemini = new GeminiHelper();
+//     await gemini.send("Explain how AI works in a few words");
+// })();
