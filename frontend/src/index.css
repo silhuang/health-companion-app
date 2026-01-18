@@ -1,5 +1,8 @@
 @import "tailwindcss";
 :root {
+  /* Global navbar height used by components (fallback 64px) */
+  --navbar-height: 128px;
+
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
     Arial, sans-serif;
 }
@@ -14,4 +17,7 @@ body {
   margin: 0;
 }
 
-
+@theme {
+  --color-background: #f0f0f0;
+  --color-card: #fff;
+}
