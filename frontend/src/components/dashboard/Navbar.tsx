@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import moodleSvg from "../../assets/moodle.svg";
+// import moodleSvg from "../../assets/moodle.svg";
 import moodle2Svg from "../../assets/moodle2.svg";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
