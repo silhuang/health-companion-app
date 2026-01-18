@@ -1,17 +1,31 @@
 import type { Thought } from "../../types/thought";
 
-const ThoughtCard = (thought: Thought) => {
-  return (
-    <div className="flex flex-col w-full gap-1 rounded-2xl bg-card p-4">
-      <div className="flex justify-between">
-        <div>{thought.emoji}</div>
-        <div className="text-text-muted">{thought.date}</div>
-      </div>
-      <div className="text-lg font-bold">{thought.title}</div>
+interface ThoughtCardProps extends Thought {
+  index: number;
+}
 
-      <div className="text-text-muted line-clamp-2">{thought.content}</div>
+const ThoughtCard = ({ title, content, date, emoji, response, index }: ThoughtCardProps) => {
+  return (
+    <div
+      className={`flex flex-col w-full gap-1 rounded-2xl p-4 ${
+        index % 3 === 0
+          ? "bg-card-yellow"
+          : index % 2 === 0
+            ? "bg-card-purple"
+            : "bg-card-green"
+      }`}
+    >
+      <div className="flex justify-between">
+        <div>{emoji}</div>
+        <div className="text-text-muted">{date}</div>
+      </div>
+      <div className="text-lg font-bold">{title}</div>
+
+      <div className="text-text-muted line-clamp-2">{content}</div>
       <hr className="text-text-muted" />
-      <div className="text-text-muted italic truncate">✨ Temp AI response text {thought.content}</div>
+      <div className="text-text-muted italic truncate">
+        ✨ Temp AI response text {response || content}
+      </div>
     </div>
   );
 };
