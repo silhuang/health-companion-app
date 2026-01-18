@@ -20,4 +20,5 @@ body {
 @theme {
   --color-background: #f0f0f0;
   --color-card: #fff;
+  --color-text-muted: #888;
 }
