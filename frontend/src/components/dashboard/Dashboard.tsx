@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import type { Thought } from "../../types/thought";
 import ThoughtCard from "./ThoughtCard";
+import NewThoughtModal from "./NewThoughtModal";
 
-const Dashboard = () => {
+const Dashboard = forwardRef((_, ref) => {
   const [thoughtList, setThoughtList] = useState<Thought[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    openModal: () => setIsModalOpen(true),
+  }));
 
   useEffect(() => {
     // Fetch thoughts from API or local storage
@@ -40,7 +46,16 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="md:flex md:flex-1 gap-2 bg-background">
+    <>
+      <NewThoughtModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={(thought) => {
+          console.log('New thought:', thought);
+          setIsModalOpen(false);
+        }}
+      />
+      <div className="md:flex md:flex-1 gap-2 bg-background">
       {/* LEFT SIDE */}
       <div className="flex flex-col gap-4 flex-1 p-4">
         <div className="text-2xl font-bold">Your Emoji Board</div>
@@ -66,8 +81,10 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
-};
+});
 
+Dashboard.displayName = "Dashboard";
 export default Dashboard;
