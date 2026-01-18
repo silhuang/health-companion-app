@@ -11,7 +11,7 @@ export default function Navbar({ onAddThought }: NavbarProps) {
   const location = useLocation();
 
   return (
-    <nav className="flex items-center justify-between px-8 py-4 bg-background">
+    <nav className="flex items-center justify-between px-12 py-4 bg-background">
       {/* Left side - Logo and brand name */}
       <div className="flex items-center gap-3">
         <img src={moodle2Svg} alt="Moodle Mascot Logo" className="w-10 h-10" />

@@ -7,7 +7,7 @@ interface ThoughtCardProps extends Thought {
 const ThoughtCard = ({ title, content, date, emoji, response, index }: ThoughtCardProps) => {
   return (
     <div
-      className={`flex flex-col w-full gap-1 rounded-2xl p-4 ${
+      className={`flex flex-col w-full gap-2 rounded-2xl p-8 ${
         index % 3 === 0
           ? "bg-card-yellow"
           : index % 2 === 0
