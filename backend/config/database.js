@@ -28,3 +28,5 @@ export const closeDB = async () => {
   await client.close();
   console.log('MongoDB connection closed');
 };
+
+// // Routes

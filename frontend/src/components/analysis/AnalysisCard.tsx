@@ -2,7 +2,7 @@ import React from "react";
 import { SpeakerWaveIcon } from "@heroicons/react/24/outline"
 
 type AnalysisCardProps = {
-  color?: string;
+  color: ColorName;
   sentimentRating?: number;
   sentimentLabel?: string;
   icon?: React.ComponentType<any>;
@@ -10,6 +10,8 @@ type AnalysisCardProps = {
   content?: string;
   listContent?: string[];
 };
+
+type ColorName = "green" | "yellow" | "purple";
 
 const COLOR_MAP = {
   green: {
@@ -39,6 +41,7 @@ const AnalysisCard = ({
     <div
       className={`flex flex-col w-full gap-4 rounded-2xl p-12 ${COLOR_MAP[color].base}`}
     >
+    <div className={`flex flex-col w-full gap-4 rounded-2xl p-12 ${color && COLOR_MAP[color].base}`}>
       {sentimentRating && sentimentLabel && (
         <div className="flex gap-4 items-center">
           <div className="w-12 h-12 flex items-center justify-center font-bold text-2xl rounded-2xl bg-card-green/90">
