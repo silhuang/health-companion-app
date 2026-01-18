@@ -48,6 +48,7 @@ import cors from "cors";
 import { connectDB } from "./config/database.js";
 import geminiRouter from "./routers/geminiRoute.js";
 import thoughtRouter from "./routers/thoughtRoute.js";
+import elevenlabsRoutes from "./routers/elevenlabsRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -62,6 +63,7 @@ app.use(express.json());
 // Mount the routers
 app.use("/api/gemini", geminiRouter);
 app.use("/api/thoughts", thoughtRouter);
+app.use("/api/elevenlabs", elevenlabsRoutes);
 
 // Start server
 app.listen(PORT, () => {
